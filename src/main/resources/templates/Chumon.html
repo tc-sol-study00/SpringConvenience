@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+   <div class="container">
+        <h1>Product List</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>注文コード</th>
+                    <th>仕入先</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ChumonJisseki : ${ChumonJissekis}">
+                    <td th:text="${ChumonJisseki.chumonId}"></td>
+                    <td th:text="${ChumonJisseki.shiireSakiId}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
