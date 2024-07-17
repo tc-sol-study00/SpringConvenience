@@ -17,6 +17,5 @@ public interface ChumonJissekiRepository extends JpaRepository<ChumonJisseki, St
 	List<ChumonJisseki> findByChumonIdAndShiireSakiId(String keyword1, String keyword2);
 	 @Query(value = "SELECT MAX(c.chumon_code) FROM chumon_jisseki c WHERE c.chumon_code LIKE CONCAT(:prefix, '%')", nativeQuery = true)
 	 String findLatestChumonId(@Param("prefix") String prefix);
-	 ChumonJisseki findByShiireSakiIdAndChumonDate(String shiireSakiId, LocalDate chumonDate,Sort sort);
 	 ChumonJisseki findByShiireSakiIdAndChumonDate(String shiireSakiId, LocalDate chumonDate);
 }
