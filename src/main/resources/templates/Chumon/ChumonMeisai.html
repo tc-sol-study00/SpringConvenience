@@ -5,16 +5,15 @@
 -->
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorate="~{Shared/layout}">
 <head>
 <title>Chumon Key Input</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- 必要なCSSファイルやJavaScriptファイルの読み込み -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
-<body>
+<body layout:fragment="content">
 	<div id="content">
 		<div class="container">
 			<div class="form-group">
@@ -143,11 +142,11 @@
 				<!-- Post範囲(End) -->
 			</div>
 			<p>
-			<!-- 処理結果表示部 -->
+				<!-- 処理結果表示部 -->
 			<div id="remark">
 				<!-- 更新しました系表示部 正常：青　異常：赤-->
-				class="${chumonViewModel.isNormal ? 'text-primary' : 'text-danger'}">	
-				<b th:text="${chumonViewModel.remark}"></b>
+				class="${chumonViewModel.isNormal ? 'text-primary' :
+				'text-danger'}"> <b th:text="${chumonViewModel.remark}"></b>
 			</div>
 			</p>
 		</div>

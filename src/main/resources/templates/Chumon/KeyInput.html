@@ -4,12 +4,15 @@
 	PostAction	:@{/submitForm}
 -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorate="~{Shared/layout}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+
+<body layout:fragment="content">
 	<!-- form範囲(Start) -->
 	<form action="#" th:action="@{/submitForm}"
 		th:object="${ChumonKeysViewModel}" method="post">
@@ -46,4 +49,5 @@
 	</form>
 	<!-- form範囲(End) -->
 </body>
+
 </html>
