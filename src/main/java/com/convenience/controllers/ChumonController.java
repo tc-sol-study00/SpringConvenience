@@ -25,14 +25,6 @@ public class ChumonController {
 	@Autowired
 	private ChumonService chumonService;
 
-//	@GetMapping("/Chumonjisseki")
-//	public String Chumon(Model model) {
-//		List<ChumonJisseki> chumonJissekis = chumonService.getAllChumonJissekis();
-//		model.addAttribute("ChumonJissekis", new ArrayList<ChumonJisseki>(chumonJissekis));
-//
-//		return "Chumon";
-//	}
-
 	@GetMapping("/KeyInput")
 	public String KeyInput(Model model) {
 		ChumonKeysViewModel chumonKeysViewModel = chumonService.SetChumonKeysViewModel();

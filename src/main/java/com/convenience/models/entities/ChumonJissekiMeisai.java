@@ -20,62 +20,81 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
-@Data
-@Entity
-@Table(name = "chumon_jisseki_meisai")
-@IdClass(ChumonJissekiMeisaiId.class)
+/**
+ * ＤＢ注文実績明細用ＤＴＯ（ChumonJissekiMeisai）
+ */
+@Data // getter/setter記述不要とするアノテーション
+@Entity // エンティティ記述
+@Table(name = "chumon_jisseki_meisai") // ＤＢ上の物理テーブル名称の記述
+@IdClass(ChumonJissekiMeisaiId.class) // 複合主キーの場合は別クラスで定義が必要
 public class ChumonJissekiMeisai {
-
-    @Id
-    @Column(name = "chumon_code")
-    @NotEmpty
+	//注文コード
+	@Id
+	@Column(name = "chumon_code")
+	@NotEmpty
 	@Size(min = 1, max = 20)
-    private String chumonId;
+	private String chumonId;
 
-    @Id
-    @Column(name = "shiire_saki_code")
-    @NotEmpty
+	//仕入先コード
+	@Id
+	@Column(name = "shiire_saki_code")
+	@NotEmpty
 	@Size(min = 1, max = 10)
-    private String shiireSakiId;
+	private String shiireSakiId;
 
-    @Id
-    @Column(name = "shiire_prd_code")
-    @NotEmpty
+	//仕入商品コード
+	@Id
+	@Column(name = "shiire_prd_code")
+	@NotEmpty
 	@Size(min = 1, max = 10)
-    private String shiirePrdId;
+	private String shiirePrdId;
 
-    @Id
-    @Column(name = "shohin_code")
-    @NotEmpty
+	//商品コード
+	@Id
+	@Column(name = "shohin_code")
+	@NotEmpty
 	@Size(min = 1, max = 10)
-    private String shohinId;
+	private String shohinId;
 
-    @Column(name = "chumon_su")
-    @NotNull
-    @PositiveOrZero
-    private BigDecimal chumonSu;
+	//注文数
+	@Column(name = "chumon_su")
+	@NotNull
+	@PositiveOrZero
+	private BigDecimal chumonSu;
 
-    @Column(name = "chumon_zan")
-    private BigDecimal chumonZan;
+	//注文残
+	@Column(name = "chumon_zan")
+	private BigDecimal chumonZan;
 
-    // This field is not mapped to the database
-    @Transient
-    private BigDecimal lastChumonSu;
+	// 以下の項目はＤＢとマッピングしない
+	@Transient
+	private BigDecimal lastChumonSu;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chumon_code", referencedColumnName = "chumon_code", insertable = false, updatable = false)
-    private ChumonJisseki chumonJisseki;
+	// 親テーブル注文実績への結合キー
+	/*
+	 * FetchType.LAZY
+		 * 関連エンティティが最初にアクセスされたときにデータベースからロードされる遅延ロード（レイジーロード）を意味する。
+		 * これにより、エンティティの初期ロード時に関連エンティティのデータをフェッチせず、必要になったときにのみデータをフェッチすることで、
+		 * パフォーマンスの最適化が図られる。
+	 * FetchType.EAGER
+		 * 関連エンティティがソースエンティティと同時に即座にロードされることを意味する。
+		 * エンティティがデータベースからフェッチされるとき、関連するすべてのエンティティも一緒にフェッチされる。
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "chumon_code", referencedColumnName = "chumon_code", insertable = false, updatable = false)
+	private ChumonJisseki chumonJisseki;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "shiire_saki_code", referencedColumnName = "shiire_saki_code", insertable = false, updatable = false),
-            @JoinColumn(name = "shiire_prd_code", referencedColumnName = "shiire_prd_code", insertable = false, updatable = false),
-            @JoinColumn(name = "shohin_code", referencedColumnName = "shohin_code", insertable = false, updatable = false)
-    })
-    private ShiireMaster shiireMaster;
-    
-    @Version
-    @Column(name = "version")
-    private long version = 0;
-    
+	// 親テーブル仕入マスターへの結合キー
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumns({
+			@JoinColumn(name = "shiire_saki_code", referencedColumnName = "shiire_saki_code", insertable = false, updatable = false),
+			@JoinColumn(name = "shiire_prd_code", referencedColumnName = "shiire_prd_code", insertable = false, updatable = false),
+			@JoinColumn(name = "shohin_code", referencedColumnName = "shohin_code", insertable = false, updatable = false) })
+	private ShiireMaster shiireMaster;
+
+	// 排他制御用
+	@Version
+	@Column(name = "version")
+	private long version = 0;
+
 }

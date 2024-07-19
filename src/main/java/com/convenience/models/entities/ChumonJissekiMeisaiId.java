@@ -4,14 +4,19 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import lombok.Data;
-
+/**
+ * 	ＤＢ注文実績明細用主キー定義（ChumonJissekiMeisaiId）
+ */
 @Data
 public class ChumonJissekiMeisaiId implements Serializable {
 
-    private String chumonId;
-    private String shiireSakiId;
-    private String shiirePrdId;
-    private String shohinId;
+	/*
+	 * 主キー項目
+	 */	
+    private String chumonId;		//注文コード
+    private String shiireSakiId;	//仕入先コード
+    private String shiirePrdId;		//仕入商品コード
+    private String shohinId;		//商品コード
 
     // equals() メソッドの実装
     @Override

@@ -2,11 +2,16 @@ package com.convenience.models.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
-
+/**
+ * 	ＤＢ仕入マスタ用主キー定義（ShiireMasterId）
+ */
 public class ShiireMasterId implements Serializable {
-    private String shiireSakiId;
-    private String shiirePrdId;
-    private String shohinId;
+	/*
+	 * 主キー項目
+	 */	
+    private String shiireSakiId;	//仕入先コード
+    private String shiirePrdId;		//仕入商品コード
+    private String shohinId;		//商品コード
 
     public ShiireMasterId() {
     }
