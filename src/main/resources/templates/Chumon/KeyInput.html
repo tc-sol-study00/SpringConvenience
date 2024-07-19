@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+    <form action="#" th:action="@{/submitForm}" th:object="${ChumonKeysViewModel}" method="post">
+        <div class="text-danger" th:if="${#fields.hasErrors('*')}">
+            <div class="text-danger" th:each="error : ${#fields.errors('*')}" th:text="${error}"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="shiireSakiId">Shiire Saki ID:</label>
+            <select id="shiireSakiId" name="shiireSakiId" class="form-control"
+                    th:field="*{shiireSakiId}">
+                <option value="">-- 選択してください --</option>
+                <option th:each="item : ${ChumonKeysViewModel.getShiireSakiList()}" th:value="${item.value}" th:text="${item.text}"></option>
+            </select>
+            <div class="text-danger" th:if="${#fields.hasErrors('shiireSakiId')}" th:errors="*{shiireSakiId}"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="chumonDate">Chumon Date:</label>
+            <input type="text" id="chumonDate" name="chumonDate" class="form-control"
+                   th:field="*{chumonDate}" />
+            <div class="text-danger" th:if="${#fields.hasErrors('chumonDate')}" th:errors="*{chumonDate}"></div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">検索</button>
+        </div>
+    </form>
+</body>
+</html>

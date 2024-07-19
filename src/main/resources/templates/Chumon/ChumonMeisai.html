@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Chumon Key Input</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 必要なCSSファイルやJavaScriptファイルの読み込み -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+	<div id="content">
+		<div class="container">
+			<div class="form-group">
+				<form th:action="@{/ChumonMeisai}" method="post"
+					th:object="${chumonViewModel}">
+					<input type="hidden" name="id" value="1" />
+					<input type="hidden" th:field="*{chumonJisseki.version}" />
+					<div id="accordion">
+						<div class="accordion-item">
+							<h5 class="accordion-header" id="headingOne">
+								<button class="accordion-button bg-light text-dark"
+									type="button" data-toggle="collapse" data-target="#collapseOne"
+									aria-expanded="true" aria-controls="collapseOne">
+									<h3 th:text="${'商品注文'}"></h3>
+								</button>
+							</h5>
+							<div id="collapseOne" class="accordion-collapse collapse show"
+								aria-labelledby="headingOne" data-parent="#accordion">
+								<div class="accordion-body">
+									<div class="row">
+										<div class="col-sm-1">
+											<label for="shiirePrdId">仕入先コード</label>
+										</div>
+										<div class="col-sm-3">
+											<input type="text" th:field="*{chumonJisseki.shiireSakiId}"
+												class="form-control custom-disabled" readonly="readonly"
+												tabindex="-1" />
+										</div>
+										<div class="col-sm-1">
+											<label for="chumonId">注文コード</label>
+										</div>
+										<div class="col-sm-3">
+											<input type="text" th:field="*{chumonJisseki.chumonId}"
+												class="form-control custom-disabled" readonly="readonly"
+												tabindex="-1" />
+										</div>
+										<div class="col-sm-1">
+											<label for="chumonDate">注文日</label>
+										</div>
+										<div class="col-sm-3">
+											<input type="text" th:field="*{chumonJisseki.chumonDate}"
+												class="form-control custom-disabled" readonly="readonly"
+												tabindex="-1" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th><label for="shiirePrdId">仕入先コード</label></th>
+								<th><label for="shiirePrdName">仕入商品名称</label></th>
+								<th><label for="shohinName">商品名称</label></th>
+								<th><label for="chumonSu">注文数</label></th>
+								<th><label for="chumonZan">注文残</label></th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- ループでデータを表示 -->
+							<tr
+								th:each="meisai, rowStat : *{chumonJisseki.chumonJissekiMeisais}">
+								<input type="hidden"
+									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonId}" />
+								<input type="hidden"
+									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiireSakiId}" />
+								<input type="hidden"
+									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shohinId}" />
+								<input type="hidden"
+									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].lastChumonSu}" />
+								<input type="hidden"
+									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].version}" />
+								<td><input type="text"
+									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiirePrdId}"
+									class="form-control custom-disabled d-none d-sm-block"
+									tabindex="-1" /></td>
+								<td><input type="text"
+									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiireMaster.shiirePrdName}"
+									class="form-control custom-disabled d-none d-sm-block"
+									tabindex="-1" readonly="readonly" /></td>
+								<td><input type="text"
+									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiireMaster.shohinMaster.shohinName}"
+									class="form-control custom-disabled" tabindex="-1"
+									readonly="readonly" /></td>
+								<td><input type="text"
+									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu}"
+									class="form-control text-end" /> <span
+									th:if="${#fields.hasErrors('chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu')}"
+									th:errors="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu}"
+									class="text-danger"></span></td>
+								<td><input type="text"
+									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonZan}"
+									class="form-control custom-disabled text-end" tabindex="-1"
+									data-input-control="nofocus" /></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="form-group">
+						<input id="submit_btn" type="submit" value="更新"
+							class="btn btn-primary" />
+					</div>
+				</form>
+			</div>
+			<p>
+			<div id="remark"
+				class="${chumonViewModel.isNormal ? 'text-primary' : 'text-danger'}">
+				<b th:text="${chumonViewModel.remark}"></b>
+			</div>
+			</p>
+		</div>
+	</div>
+
+
+</body>
+</html>

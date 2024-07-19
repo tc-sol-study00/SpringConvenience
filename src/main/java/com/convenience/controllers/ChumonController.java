@@ -63,10 +63,9 @@ public class ChumonController {
 		boolean isNormal;
 
 		try {
-			isNormal=chumonService.AdjustChumonZanToUpdate(viewModel.getChumonJisseki());
-		}
-		catch(Exception e) {
-			isNormal=false;
+			isNormal = chumonService.AdjustChumonZanToUpdate(viewModel.getChumonJisseki());
+		} catch (Exception e) {
+			isNormal = false;
 		}
 		if (isNormal) {
 			String postedShiireSakiId = viewModel.getChumonJisseki().getShiireSakiId();
