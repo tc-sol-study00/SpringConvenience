@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import jakarta.persistence.Version;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -72,4 +73,9 @@ public class ChumonJissekiMeisai {
             @JoinColumn(name = "shohin_code", referencedColumnName = "shohin_code", insertable = false, updatable = false)
     })
     private ShiireMaster shiireMaster;
+    
+    @Version
+    @Column(name = "version")
+    private long version = 0;
+    
 }

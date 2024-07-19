@@ -60,8 +60,15 @@ public class ChumonController {
 	public String ChumonMeisai(@ModelAttribute("ChumonViewModel") ChumonViewModel viewModel,
 			BindingResult bindingResult, Model model) {
 		ChumonViewModel chumonViewModel;
+		boolean isNormal;
 
-		if (chumonService.AdjustChumonZanToUpdate(viewModel.getChumonJisseki())) {
+		try {
+			isNormal=chumonService.AdjustChumonZanToUpdate(viewModel.getChumonJisseki());
+		}
+		catch(Exception e) {
+			isNormal=false;
+		}
+		if (isNormal) {
 			String postedShiireSakiId = viewModel.getChumonJisseki().getShiireSakiId();
 			LocalDate postedChumonDate = viewModel.getChumonJisseki().getChumonDate();
 			chumonViewModel = chumonService.ChumonReception(postedShiireSakiId, postedChumonDate);
