@@ -1,32 +1,49 @@
+<!--
+	注文キー入力用テンプレート
+	Model		:注文キー入力用ビューモデル	${ChumonKeysViewModel}
+	PostAction	:@{/submitForm}
+-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-    <form action="#" th:action="@{/submitForm}" th:object="${ChumonKeysViewModel}" method="post">
-        <div class="text-danger" th:if="${#fields.hasErrors('*')}">
-            <div class="text-danger" th:each="error : ${#fields.errors('*')}" th:text="${error}"></div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="shiireSakiId">Shiire Saki ID:</label>
-            <select id="shiireSakiId" name="shiireSakiId" class="form-control"
-                    th:field="*{shiireSakiId}">
-                <option value="">-- 選択してください --</option>
-                <option th:each="item : ${ChumonKeysViewModel.getShiireSakiList()}" th:value="${item.value}" th:text="${item.text}"></option>
-            </select>
-            <div class="text-danger" th:if="${#fields.hasErrors('shiireSakiId')}" th:errors="*{shiireSakiId}"></div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="chumonDate">Chumon Date:</label>
-            <input type="text" id="chumonDate" name="chumonDate" class="form-control"
-                   th:field="*{chumonDate}" />
-            <div class="text-danger" th:if="${#fields.hasErrors('chumonDate')}" th:errors="*{chumonDate}"></div>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">検索</button>
-        </div>
-    </form>
+	<!-- form範囲(Start) -->
+	<form action="#" th:action="@{/submitForm}"
+		th:object="${ChumonKeysViewModel}" method="post">
+		<div class="text-danger" th:if="${#fields.hasErrors('*')}">
+			<div class="text-danger" th:each="error : ${#fields.errors('*')}"
+				th:text="${error}"></div>
+		</div>
+		<!-- 注文先選択 -->
+		<div class="form-group">
+			<label class="control-label" for="shiireSakiId">Shiire Saki
+				ID:</label>
+			<!-- セレクトアイテムリスト -->
+			<select id="shiireSakiId" name="shiireSakiId" class="form-control"
+				th:field="*{shiireSakiId}">
+				<option value="">-- 選択してください --</option>
+				<option th:each="item : ${ChumonKeysViewModel.getShiireSakiList()}"
+					th:value="${item.value}" th:text="${item.text}"></option>
+			</select>
+			<div class="text-danger" th:if="${#fields.hasErrors('shiireSakiId')}"
+				th:errors="*{shiireSakiId}"></div>
+		</div>
+		<!-- 注文日 -->
+		<div class="form-group">
+			<label class="control-label" for="chumonDate">Chumon Date:</label> <input
+				type="text" id="chumonDate" name="chumonDate" class="form-control"
+				th:field="*{chumonDate}" />
+			<div class="text-danger" th:if="${#fields.hasErrors('chumonDate')}"
+				th:errors="*{chumonDate}"></div>
+		</div>
+		<!-- 検索ボタン -->
+		<div class="form-group">
+			<button type="submit" class="btn btn-primary">検索</button>
+		</div>
+	</form>
+	<!-- form範囲(End) -->
 </body>
 </html>
