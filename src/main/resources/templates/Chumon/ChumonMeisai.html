@@ -14,31 +14,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body layout:fragment="content">
-	<div id="content">
+	<div id="content" style="display: none">
 		<div class="container">
 			<div class="form-group">
 				<!-- Post範囲(Start) -->
-				<form th:action="@{/ChumonMeisai}" method="post"
+				<form th:action="@{ChumonMeisai}" method="post"
 					th:object="${chumonViewModel}">
 					<input type="hidden" name="id" value="1" /> <input type="hidden"
 						th:field="*{chumonJisseki.version}" />
-					<div id="accordion">
+					<!--アコーデオン-->
+					<div class="accordion" id="accordion">
 						<div class="accordion-item">
 							<h5 class="accordion-header" id="headingOne">
 								<button class="accordion-button bg-light text-dark"
-									type="button" data-toggle="collapse" data-target="#collapseOne"
+									type="button" data-bs-toggle="collapse"
+									data-bs-target="#collapseOne"
 									aria-expanded="true" aria-controls="collapseOne">
 									<h3 th:text="${'商品注文'}"></h3>
 								</button>
 							</h5>
 							<!-- 注文実績領域(Start) -->
 							<div id="collapseOne" class="accordion-collapse collapse show"
-								aria-labelledby="headingOne" data-parent="#accordion">
+								aria-labelledby="headingOne" data-bs-parent="#accordion">
 								<div class="accordion-body">
 									<div class="row">
 										<!-- 仕入先コード -->
 										<div class="col-sm-1">
-											<label for="shiirePrdId">仕入先コード</label>
+											<label for="chumonJisseki.shiireSakiId">仕入先コード</label>
 										</div>
 										<div class="col-sm-3">
 											<input type="text" th:field="*{chumonJisseki.shiireSakiId}"
@@ -47,7 +49,7 @@
 										</div>
 										<!-- 注文コード -->
 										<div class="col-sm-1">
-											<label for="chumonId">注文コード</label>
+											<label for="chumonJisseki.chumonId">注文コード</label>
 										</div>
 										<div class="col-sm-3">
 											<input type="text" th:field="*{chumonJisseki.chumonId}"
@@ -56,7 +58,7 @@
 										</div>
 										<!-- 注文日 -->
 										<div class="col-sm-1">
-											<label for="chumonDate">注文日</label>
+											<label for="chumonJisseki.chumonDate">注文日</label>
 										</div>
 										<div class="col-sm-3">
 											<input type="text" th:field="*{chumonJisseki.chumonDate}"
@@ -74,11 +76,22 @@
 						<!-- タイトル -->
 						<thead>
 							<tr>
-								<th><label for="shiirePrdId">仕入先コード</label></th>
-								<th><label for="shiirePrdName">仕入商品名称</label></th>
-								<th><label for="shohinName">商品名称</label></th>
-								<th><label for="chumonSu">注文数</label></th>
-								<th><label for="chumonZan">注文残</label></th>
+								<th style="display: none;"></th>
+								<th><label
+									for="chumonJisseki.chumonJissekiMeisais0.shiirePrdId"
+									class="control-label d-none d-sm-block">仕入先コード</label></th>
+								<th><label
+									for="chumonJisseki.chumonJissekiMeisais0.shiireMaster.shiirePrdName"
+									class="control-label d-none d-sm-block">仕入商品名称</label></th>
+								<th><label
+									for="chumonJisseki.chumonJissekiMeisais0.shiireMaster.shohinMaster.shohinName"
+									class="control-label">商品名称</label></th>
+								<th><label
+									for="chumonJisseki.chumonJissekiMeisais0.chumonSu"
+									class="control-label">注文数</label></th>
+								<th><label
+									for="chumonJisseki.chumonJissekiMeisais0.chumonZan"
+									class="control-label">注文残</label></th>
 							</tr>
 						</thead>
 						<!-- 実際のデータ部 -->
@@ -87,21 +100,18 @@
 							<tr
 								th:each="meisai, rowStat : *{chumonJisseki.chumonJissekiMeisais}">
 								<!-- Hidden部分 -->
-								<!-- 注文コード -->
-								<input type="hidden"
+								<td style="display: none;">
+									<!-- 注文コード --> <input type="hidden"
 									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonId}" />
-								<!-- 注文先コード -->
-								<input type="hidden"
+									<!-- 注文先コード --> <input type="hidden"
 									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiireSakiId}" />
-								<!-- 商品コード -->
-								<input type="hidden"
+									<!-- 商品コード --> <input type="hidden"
 									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shohinId}" />
-								<!-- 更新前注文数 -->
-								<input type="hidden"
+									<!-- 更新前注文数 --> <input type="hidden"
 									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].lastChumonSu}" />
-								<!-- 排他制御用バージョン -->
-								<input type="hidden"
+									<!-- 排他制御用バージョン --> <input type="hidden"
 									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].version}" />
+								</td>
 								<!-- データ表示部分 -->
 								<!-- 仕入商品コード -->
 								<td><input type="text"
@@ -141,15 +151,21 @@
 				</form>
 				<!-- Post範囲(End) -->
 			</div>
-			<p>
-				<!-- 処理結果表示部 -->
-			<div id="remark">
-				<!-- 更新しました系表示部 正常：青　異常：赤-->
-				class="${chumonViewModel.isNormal ? 'text-primary' :
-				'text-danger'}"> <b th:text="${chumonViewModel.remark}"></b>
+			<!-- 処理結果表示部 -->
+			<!-- 更新しました系表示部 正常：青　異常：赤-->
+			<div id="remark"
+				th:class="${chumonViewModel.isNormal ? 'text-primary' : 'text-danger'}">
+				<b th:text="${chumonViewModel.remark}"></b>
 			</div>
-			</p>
 		</div>
 	</div>
+	<div id="handlingFlg" th:attr="data-message=${handlingFlg}"></div>
 </body>
+<div layout:fragment="script">
+ 	<script src="/js/sites.js"></script>
+	<script>
+		AccordionHandller();
+		RendaSolution();
+	</script>
+</div>
 </html>

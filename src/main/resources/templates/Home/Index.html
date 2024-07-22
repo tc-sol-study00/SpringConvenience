@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorate="~{Shared/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body layout:fragment="content">
+	<div class="row">
+		<div th:each="menuItem : ${menuItemList}" class="col-md-4">
+			<div class="card mb-3">
+				<div class="card-body">
+					<h5 class="card-title" th:text="${menuItem.name}"></h5>
+					<p class="card-text" th:text="${menuItem.description}"></p>
+					<a th:href="${menuItem.url}" class="btn btn-primary" th:text="${menuItem.name}"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

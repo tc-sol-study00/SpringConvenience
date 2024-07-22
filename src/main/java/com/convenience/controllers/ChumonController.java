@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.convenience.services.ChumonService;
 
@@ -21,6 +22,7 @@ import com.convenience.models.entities.ChumonJisseki;
 import com.convenience.models.viewmodels.*;
 
 @Controller
+@RequestMapping("/Chumon")
 public class ChumonController {
 	@Autowired
 	private ChumonService chumonService;
@@ -32,7 +34,7 @@ public class ChumonController {
 		return "Chumon/KeyInput";
 	}
 
-	@PostMapping("/submitForm")
+	@PostMapping("/KeyInput")
 	public String KeyInput(@ModelAttribute("ChumonKeysViewModel") ChumonKeysViewModel viewModel,
 			BindingResult bindingResult, Model model) {
 		// エラーがある場合の処理
@@ -44,6 +46,7 @@ public class ChumonController {
 		LocalDate postedChumonDate = viewModel.getChumonDate();
 		ChumonViewModel chumonViewModel = chumonService.ChumonReception(postedShiireSakiId, postedChumonDate);
 		model.addAttribute("chumonViewModel", chumonViewModel);
+		model.addAttribute("handlingFlg","FirstDisplay");
 
 		return "Chumon/ChumonMeisai";
 	}
@@ -71,6 +74,7 @@ public class ChumonController {
 			chumonViewModel.setRemark("更新できませんでした");
 		}
 		model.addAttribute("chumonViewModel", chumonViewModel);
+		model.addAttribute("handlingFlg","SecondDisplay");
 		return "Chumon/ChumonMeisai";
 
 	}

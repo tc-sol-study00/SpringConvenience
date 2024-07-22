@@ -3,21 +3,54 @@
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/site.css" rel="stylesheet">
 </head>
 <body>
 	<header>
-		<h1>ＴＣコンビニ管理システム</h1>
+		<nav
+			class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3"
+			style="background: linear-gradient(to right, #001F3F, #005F9E); border: 1px solid #005F9E;">
+			<div class="container-fluid">
+				<a class="navbar-brand" th:href="@{/}" tabindex="-1">コンビニ在庫管理システム
+				</a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div
+					class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item"><a class="nav-link text-light"
+							th:href="@{/}" tabindex="-1">Home</a></li>
+						<li class="nav-item"><a class="nav-link text-light"
+							th:href="@{/Chumon/KeyInput}" tabindex="-1">商品注文</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 	</header>
-
 	<main>
 		<!-- コンテンツがここに挿入される -->
-		<div layout:fragment="content">></div>
+		<div layout:fragment="content"></div>
 	</main>
-
-	<footer>
-		<p>&copy; 2024 Techno-Creative Inc.</p>
+	<footer
+		class="border-top footer headerbg-color text-muted fixed-bottom"
+		style="background: linear-gradient(to right, #001F3F, #005F9E); border: 1px solid #005F9E;">
+		<div class="row">
+			<div class="col text-white text-end pe-5">&copy; 2023-2024 -
+				Techno Creative Inc.</div>
+		</div>
 	</footer>
+
+	<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/lib/jquery/dist/js/jquery.min.js"></script>
+	<script
+		src="/lib/jquery/dist/js/jquery.cookie.min.js"></script>
+	<!-- 各スクリプトが展開される 各ビュー設定次第-->
+	<div layout:fragment="script"></div>
 </body>
 </html>
