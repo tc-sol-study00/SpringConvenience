@@ -13,7 +13,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.Version;
-import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -58,8 +59,10 @@ public class ChumonJissekiMeisai {
 
 	//注文数
 	@Column(name = "chumon_su")
-	@NotNull
-	@PositiveOrZero
+	@NotNull( message = "入力必須項目です")
+	@PositiveOrZero(message = "数値は0以上を入力してください")
+	@DecimalMax(value="999.99",message = "入力は0～999.99の範囲で入力してください")
+	@Digits(integer = 3, fraction = 2, message = "整数部は最大3桁、小数部は最大2桁でなければなりません")
 	private BigDecimal chumonSu;
 
 	//注文残

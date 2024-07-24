@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -60,6 +61,7 @@ public class ChumonJisseki {
 	@OneToMany(mappedBy = "chumonJisseki", cascade = CascadeType.ALL, orphanRemoval = true)
 	//コレクションまたはリストの順序を指定する
 	@OrderBy("shiirePrdId ASC") 
+	@Valid
 	private List<ChumonJissekiMeisai> chumonJissekiMeisais;
 
 	// 排他制御用

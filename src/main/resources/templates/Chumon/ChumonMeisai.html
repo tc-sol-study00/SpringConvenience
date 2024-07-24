@@ -28,8 +28,8 @@
 							<h5 class="accordion-header" id="headingOne">
 								<button class="accordion-button bg-light text-dark"
 									type="button" data-bs-toggle="collapse"
-									data-bs-target="#collapseOne"
-									aria-expanded="true" aria-controls="collapseOne">
+									data-bs-target="#collapseOne" aria-expanded="true"
+									aria-controls="collapseOne">
 									<h3 th:text="${'商品注文'}"></h3>
 								</button>
 							</h5>
@@ -99,6 +99,7 @@
 							<!-- ループでデータを表示 -->
 							<tr
 								th:each="meisai, rowStat : *{chumonJisseki.chumonJissekiMeisais}">
+
 								<!-- Hidden部分 -->
 								<td style="display: none;">
 									<!-- 注文コード --> <input type="hidden"
@@ -131,10 +132,11 @@
 								<!-- 注文数 -->
 								<td><input type="text"
 									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu}"
-									class="form-control text-end" /> <span
-									th:if="${#fields.hasErrors('chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu')}"
-									th:errors="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu}"
-									class="text-danger"></span></td>
+									class="form-control text-end" /> 
+									<!-- 注文数入力チェック＆エラー表示 -->
+									<span　th:if="${#fields.hasErrors('chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu')}"
+										　　th:errors="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu}"
+									class="text-danger"></span>
 								<!-- 注文残 -->
 								<td><input type="text"
 									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonZan}"
@@ -162,7 +164,7 @@
 	<div id="handlingFlg" th:attr="data-message=${handlingFlg}"></div>
 </body>
 <div layout:fragment="script">
- 	<script src="/js/sites.js"></script>
+	<script src="/js/sites.js"></script>
 	<script>
 		AccordionHandller();
 		RendaSolution();
