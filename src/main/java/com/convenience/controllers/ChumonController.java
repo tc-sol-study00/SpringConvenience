@@ -12,18 +12,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.convenience.models.viewmodels.ChumonKeysViewModel;
 import com.convenience.models.viewmodels.ChumonViewModel;
 import com.convenience.services.ChumonService;
-
 import jakarta.validation.Valid;
+import com.convenience.constant.UrlConst;
 
 /**
  * 注文コントローラ
  */
 @Controller
-@RequestMapping("/Chumon")
+@RequestMapping(UrlConst.CHUMONMAPPNG)
 public class ChumonController {
 	// 注文サービス
 	@Autowired
@@ -35,14 +34,14 @@ public class ChumonController {
 	 * @param model
 	 * @return "Chumon/KeyInput" 注文入力キー入力ビュー
 	 */
-	@GetMapping("/KeyInput")
+	@GetMapping(UrlConst.CHUMONKEYINPUT)
 	public String KeyInput(Model model) {
 		/* キー入力画面初期設定 */
 		ChumonKeysViewModel chumonKeysViewModel = chumonService.SetChumonKeysViewModel();
 		/* 画面に初期設定内容をバインド */
 		model.addAttribute("ChumonKeysViewModel", chumonKeysViewModel);
 		/* キー入力用ビューの表示 */
-		return "Chumon/KeyInput";
+		return UrlConst.CHUMONKEYINPUTURL;
 	}
 
 	/**
@@ -53,7 +52,7 @@ public class ChumonController {
 	 * @param model         モデル
 	 * @return 注文明細用ビュー
 	 */
-	@PostMapping("/KeyInput")
+	@PostMapping(UrlConst.CHUMONKEYINPUT)
 	public String KeyInput(@ModelAttribute("ChumonKeysViewModel") ChumonKeysViewModel viewModel,
 			BindingResult bindingResult, Model model) {
 		// エラーがある場合の処理
@@ -73,7 +72,7 @@ public class ChumonController {
 		/* アコーデオン表示の対応 */
 		model.addAttribute("handlingFlg", "FirstDisplay");
 		/* 注文明細ビューの表示 */
-		return "Chumon/ChumonMeisai";
+		return UrlConst.CHUMONMEISAIURL;
 	}
 
 	/**
@@ -84,7 +83,7 @@ public class ChumonController {
 	 * @param model         モデル
 	 * @return 注文明細用ビュー
 	 */
-	@PostMapping("/ChumonMeisai")
+	@PostMapping(UrlConst.CHUMONMEISAI)
 	// 下の@ModelAttribute("chumonViewModel")は、ThymeleadのFormのth:objectの内容とあわせないと、エラーが表示されない
 	public String ChumonMeisai(@ModelAttribute("chumonViewModel") @Valid ChumonViewModel viewModel,
 			BindingResult bindingResult, Model model) {
@@ -116,7 +115,7 @@ public class ChumonController {
 			model.addAttribute("chumonViewModel", viewModel);
 			model.addAttribute("handlingFlg", "SecondDisplay");
 
-			return "Chumon/ChumonMeisai"; // バリデーションエラーがある場合、フォームページに戻る
+			return UrlConst.CHUMONMEISAIURL; // バリデーションエラーがある場合、フォームページに戻る
 		}
 
 		try {
@@ -144,6 +143,6 @@ public class ChumonController {
 		/* アコーデオン対応 */
 		model.addAttribute("handlingFlg", "SecondDisplay");
 		/* 注文明細ビューの表示 */
-		return "Chumon/ChumonMeisai";
+		return UrlConst.CHUMONMEISAIURL;
 	}
 }

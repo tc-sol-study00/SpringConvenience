@@ -2,6 +2,8 @@ package com.convenience.models;
 
 import java.util.ArrayList;
 
+import com.convenience.constant.*;
+
 import lombok.Data;
 
 @Data
@@ -23,8 +25,8 @@ public class Menu {
 	}
 	
 	public Menu(){
-		menuItemList.add(new MenuItem("ホーム","/","このページに戻ってきます"));
-		menuItemList.add(new MenuItem("商品注文","/Chumon/KeyInput","仕入先毎に注文を作成します。一日一回注文を起こし仕入先単位で注文コードを発番します。注文番号を指定して注文内容を修正することもできます。"));
+		menuItemList.add(new MenuItem("ホーム",UrlConst.HOMEINDEXURL,"このページに戻ってきます"));
+		menuItemList.add(new MenuItem("商品注文",UrlConst.CHUMONKEYINPUTURL,"仕入先毎に注文を作成します。一日一回注文を起こし仕入先単位で注文コードを発番します。注文番号を指定して注文内容を修正することもできます。"));
 	}
 
 }
