@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+	layout:decorate="~{Shared/layout}">
+<head>
+<head>
+<meta charset="UTF-8">
+<title>ログイン画面</title>
+</head>
+<body layout:fragment="content">
+	<div class="container-fluid">
+		<h2>ログイン画面</h2>
+		<div class="alert alert-danger d-flex align-items-center" role="alert"
+			th:if="${errorMsg} != null">
+			<svg class="bi flex-shrink-0 me-2" width="24" height="24">
+			<use xlink:href="#exclamation-triangle-fill" />
+		</svg>
+			<div>
+				<span th:text="${errorMsg}"></span>
+			</div>
+		</div>
+		<form th:action="@{/Login/login}" method="post" th:object="${loginForm}">
+			<div class="form-group">
+				<div class="col-3 col-md-2 col-xxl-1">
+					<p>
+						<label for="loginId">ログインID：</label> <input type="text"
+							class="form-control" th:field="*{loginId}">
+				</div>
+				<div class="col-3 col-md-2 col-xxl-1">
+					<p>
+						<label for="password">パスワード：</label> <input type="password"
+							class="form-control" th:field="*{password}">
+				</div>
+				<p>
+					<input type="submit" class="btn btn-primary" value="ログイン">
+			</div>
+		</form>
+	</div>
+</body>
+</html>
