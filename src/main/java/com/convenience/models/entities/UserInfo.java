@@ -22,5 +22,10 @@ public class UserInfo {
 	private String loginId;
 
 	/** パスワード */
+	@Column(name = "password")
 	private String password;
+	
+	/** ユーザ名フルネーム */
+	@Column(name = "userfullname")
+	private String userfullname;
 }
