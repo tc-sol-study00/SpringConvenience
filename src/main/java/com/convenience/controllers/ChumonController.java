@@ -15,19 +15,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.convenience.models.viewmodels.ChumonKeysViewModel;
 import com.convenience.models.viewmodels.ChumonViewModel;
 import com.convenience.services.ChumonService;
+
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
 import com.convenience.constant.UrlConst;
 
 /**
  * 注文コントローラ
  */
 @Controller
+@RequiredArgsConstructor
 @RequestMapping(UrlConst.CHUMONMAPPNG)
 public class ChumonController {
-	// 注文サービス
-	@Autowired
-	private ChumonService chumonService;
 
+	private final ChumonService _chumonService;
+	
+	/*　@RequiredArgsConstructorを書いたから、ＤＩ注入記述不要となった
+	 * public ChumonController(ChumonService chumonService) { // 注文サービスDI
+	 * this._chumonService=chumonService; }
+	 */	
 	/**
 	 * キー入力初期表示
 	 * 
@@ -37,7 +45,7 @@ public class ChumonController {
 	@GetMapping(UrlConst.CHUMONKEYINPUT)
 	public String KeyInput(Model model) {
 		/* キー入力画面初期設定 */
-		ChumonKeysViewModel chumonKeysViewModel = chumonService.SetChumonKeysViewModel();
+		ChumonKeysViewModel chumonKeysViewModel = _chumonService.SetChumonKeysViewModel();
 		/* 画面に初期設定内容をバインド */
 		model.addAttribute("ChumonKeysViewModel", chumonKeysViewModel);
 		/* キー入力用ビューの表示 */
@@ -65,7 +73,7 @@ public class ChumonController {
 		 */
 		String postedShiireSakiId = viewModel.getShiireSakiId();
 		LocalDate postedChumonDate = viewModel.getChumonDate();
-		ChumonViewModel chumonViewModel = chumonService.ChumonReception(postedShiireSakiId, postedChumonDate);
+		ChumonViewModel chumonViewModel = _chumonService.ChumonReception(postedShiireSakiId, postedChumonDate);
 
 		/* 注文データ表示表に注文データをセットする */
 		model.addAttribute("chumonViewModel", chumonViewModel);
@@ -120,7 +128,7 @@ public class ChumonController {
 
 		try {
 			/* 注文残の調整と注文実績の登録（ＤＢ更新） */
-			isNormal = chumonService.AdjustChumonZanToUpdate(viewModel.getChumonJisseki());
+			isNormal = _chumonService.AdjustChumonZanToUpdate(viewModel.getChumonJisseki());
 		} catch (Exception e) {
 			/* DB更新した場合にエラー→ロールバック例外発生したら */
 			isNormal = false;
@@ -129,7 +137,7 @@ public class ChumonController {
 			/* 注文登録が正常 */
 			String postedShiireSakiId = viewModel.getChumonJisseki().getShiireSakiId();
 			LocalDate postedChumonDate = viewModel.getChumonJisseki().getChumonDate();
-			chumonViewModel = chumonService.ChumonReception(postedShiireSakiId, postedChumonDate);
+			chumonViewModel = _chumonService.ChumonReception(postedShiireSakiId, postedChumonDate);
 			chumonViewModel.setIsNormal(true);
 			chumonViewModel.setRemark("更新しました");
 		} else {

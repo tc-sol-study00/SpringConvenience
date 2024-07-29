@@ -25,15 +25,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginController {
 
-	/** ログイン画面 Service */
-	/* private final LoginService service; */
-
-	/** PasswordEncoder */
-	/* private final PasswordEncoder passwordEncoder; */
-
-	/** メッセージソース */
-	/* private final MessageSource messageSource; */
-
 	/** セッション情報 */
 	private final HttpSession session;
 
