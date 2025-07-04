@@ -11,9 +11,9 @@ import lombok.Data;
  * 
  *
  */
+@Data
 @Entity
 @Table(name = "user_info")
-@Data
 public class UserInfo {
 
 	/** ログインID */

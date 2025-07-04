@@ -7,7 +7,6 @@ import com.convenience.models.viewmodels.ChumonKeysViewModel;
 import com.convenience.models.viewmodels.ChumonViewModel;
 
 import jakarta.transaction.Transactional;
-
 /**
  * 仕入サービスインターフェース
  */
@@ -37,6 +36,4 @@ public interface ChumonService {
 	 */
 	@Transactional
 	public boolean AdjustChumonZanToUpdate(ChumonJisseki inchumonJisseki);
-	
-
 }

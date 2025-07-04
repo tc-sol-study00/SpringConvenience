@@ -32,9 +32,9 @@ public class ShohinMaster {
     private BigDecimal shohiZeiritsu;
 
     //消費税率（外食）
-    @Column(name = "shohi_zeiritsu_gaisyoku", nullable = false, precision = 15, scale = 2)
+    @Column(name = "shohi_zeiritsu_eatin", nullable = false, precision = 15, scale = 2)
     @NotNull
-    private BigDecimal shohiZeiritsuGaishoku;
+    private BigDecimal shohiZeiritsuEatIn;
 	// 子テーブル仕入マスタへの結合キー
     //このエンティティ削除時に、仕入マスタが削除されないようにする（orphanRemoval = false）
     @OneToMany(mappedBy = "shohinMaster",cascade = CascadeType.ALL, orphanRemoval = false)

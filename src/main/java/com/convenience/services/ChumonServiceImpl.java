@@ -35,7 +35,7 @@ public class ChumonServiceImpl implements ChumonService {
 	private final Chumon chumon;
 
 	public ChumonServiceImpl(ChumonJissekiRepository inChumonJissekiRepository,
-			ShiireSakiMasterRepository inShiireSakiMasterRepository, Chumon inChumon) {
+		ShiireSakiMasterRepository inShiireSakiMasterRepository, Chumon inChumon) {
 		// 注文実績Jpaレポジトリ
 		chumonJissekiRepository = inChumonJissekiRepository;
 		// 仕入先マスタJpaレポジトリ
