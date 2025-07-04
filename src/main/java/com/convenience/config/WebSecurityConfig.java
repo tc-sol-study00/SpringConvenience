@@ -43,7 +43,7 @@ public class WebSecurityConfig {
 				.csrf((csrf) -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
 				.formLogin(login -> login.loginPage(UrlConst.LOGIN) // 自作ログイン画面(Controller)を使うための設定
 						.usernameParameter(USERNAME_PARAMETER) // ユーザ名パラメータのname属性
-						.defaultSuccessUrl(UrlConst.MENU)) // ログイン成功後のリダイレクトURL
+						.defaultSuccessUrl(UrlConst.MENU,true)) // ログイン成功後のリダイレクトURL
 				.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher(UrlConst.LOGOUT))
 						.logoutSuccessUrl(UrlConst.LOGIN));
 		return http.build();
