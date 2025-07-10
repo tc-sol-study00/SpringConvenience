@@ -1,7 +1,6 @@
 package com.convenience.models.viewmodels;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,6 +22,7 @@ public class ChumonKeysViewModel {
     private String shiireSakiId;
 
     //注文日
+    @NotNull(message = "注文日は必須です")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate chumonDate;
 

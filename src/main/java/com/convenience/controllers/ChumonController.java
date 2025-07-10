@@ -2,7 +2,6 @@ package com.convenience.controllers;
 
 import java.time.LocalDate;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,15 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.convenience.constant.UrlConst;
 import com.convenience.models.viewmodels.ChumonKeysViewModel;
 import com.convenience.models.viewmodels.ChumonViewModel;
 import com.convenience.services.ChumonService;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
-import com.convenience.constant.UrlConst;
 
 /**
  * 注文コントローラ
@@ -31,11 +30,12 @@ import com.convenience.constant.UrlConst;
 public class ChumonController {
 
 	private final ChumonService _chumonService;
-	
-	/*　@RequiredArgsConstructorを書いたから、ＤＩ注入記述不要となった
-	 * public ChumonController(ChumonService chumonService) { // 注文サービスDI
+
+	/*
+	 * @RequiredArgsConstructorを書いたから、ＤＩ注入記述不要となった public
+	 * ChumonController(ChumonService chumonService) { // 注文サービスDI
 	 * this._chumonService=chumonService; }
-	 */	
+	 */
 	/**
 	 * キー入力初期表示
 	 * 
@@ -61,11 +61,17 @@ public class ChumonController {
 	 * @return 注文明細用ビュー
 	 */
 	@PostMapping(UrlConst.CHUMONKEYINPUT)
-	public String KeyInput(@ModelAttribute("ChumonKeysViewModel") ChumonKeysViewModel viewModel,
-			BindingResult bindingResult, Model model) {
+	public String KeyInput(@Valid @ModelAttribute("ChumonKeysViewModel") ChumonKeysViewModel viewModel,
+			BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 		// エラーがある場合の処理
 		if (bindingResult.hasErrors()) {
-			return "formPage"; // エラー表示を含んだフォームページを再表示
+			ChumonKeysViewModel chumonKeysViewModel = _chumonService.SetChumonKeysViewModel();
+			ChumonKeysViewModel postedviewModel = (ChumonKeysViewModel) model.getAttribute("ChumonKeysViewModel");
+			postedviewModel.setShiireSakiList(chumonKeysViewModel.getShiireSakiList());
+			/* 画面に初期設定内容をバインド */
+			model.addAttribute("ChumonKeysViewModel", postedviewModel);
+
+			return UrlConst.CHUMONKEYINPUTURL;
 		}
 
 		/*

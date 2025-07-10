@@ -14,13 +14,12 @@ import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 /**
  * 	ＤＢ注文実績用ＤＴＯ（ChumonJisseki）
- */
+ **/
 @Data							//getter/setter記述不要とするアノ
 @Entity                         //エンティティ記述
 @Table(name = "chumon_jisseki") //ＤＢ上の物理テーブル名称の記述       

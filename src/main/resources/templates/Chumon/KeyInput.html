@@ -19,7 +19,8 @@
 				<!-- form範囲(Start) -->
 				<form action="#" th:action="@{KeyInput}"
 					th:object="${ChumonKeysViewModel}" method="post">
-					<div class="text-danger" th:if="${#fields.hasErrors('*')}">
+					<div class="border border-danger p-2" th:if="${#fields.hasErrors('*')}">
+						<div class="text-danger fw-bold mb-2">＜エラーあり＞</div> <!-- 先頭のメッセージ -->
 						<div class="text-danger" th:each="error : ${#fields.errors('*')}"
 							th:text="${error}"></div>
 					</div>
@@ -46,6 +47,11 @@
 						<div class="text-danger"
 							th:if="${#fields.hasErrors('chumonDate')}"
 							th:errors="*{chumonDate}"></div>
+						<!-- 型変換エラーの捕捉 -->
+						<div th:if="${#fields.hasGlobalErrors()}" class="text-danger">
+						  <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+						</div>
+							
 					</div>
 					<!-- 検索ボタン -->
 					<div class="form-group">

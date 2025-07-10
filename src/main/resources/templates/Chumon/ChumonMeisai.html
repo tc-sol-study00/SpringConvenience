@@ -5,37 +5,41 @@
 -->
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
 	layout:decorate="~{Shared/layout}">
+
 <head>
-<title>注文入力（明細入力）</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>注文入力（明細入力）</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body layout:fragment="content">
 	<div id="content" style="display: none">
 		<div class="container">
 			<div class="form-group">
 				<!-- Post範囲(Start) -->
-				<form th:action="@{ChumonMeisai}" method="post"
-					th:object="${chumonViewModel}">
+				<form th:action="@{ChumonMeisai}" method="post" th:object="${chumonViewModel}">
+					<div class="border border-danger p-2" th:if="${#fields.hasErrors('*')}">
+						<div class="text-danger fw-bold mb-2">＜エラーあり＞</div> <!-- 先頭のメッセージ -->
+						<div class="text-danger" th:each="error : ${#fields.errors('*')}"
+							th:text="${error}"></div>
+					</div>
 					<input type="hidden" name="id" value="1" /> <input type="hidden"
 						th:field="*{chumonJisseki.version}" />
 					<!--アコーデオン-->
 					<div class="accordion" id="accordion">
 						<div class="accordion-item">
 							<h5 class="accordion-header" id="headingOne">
-								<button class="accordion-button bg-light text-dark"
-									type="button" data-bs-toggle="collapse"
-									data-bs-target="#collapseOne" aria-expanded="true"
+								<button class="accordion-button bg-light text-dark" type="button"
+									data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
 									aria-controls="collapseOne">
 									<h3 th:text="${'商品注文'}"></h3>
 								</button>
 							</h5>
 							<!-- 注文実績領域(Start) -->
-							<div id="collapseOne" class="accordion-collapse collapse show"
-								aria-labelledby="headingOne" data-bs-parent="#accordion">
+							<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+								data-bs-parent="#accordion">
 								<div class="accordion-body">
 									<div class="row">
 										<!-- 仕入先コード -->
@@ -77,86 +81,81 @@
 						<thead>
 							<tr>
 								<th style="display: none;"></th>
+								<th><label for="chumonJisseki.chumonJissekiMeisais0.shiirePrdId"
+										class="control-label d-none d-sm-block">仕入先コード</label></th>
+								<th><label for="chumonJisseki.chumonJissekiMeisais0.shiireMaster.shiirePrdName"
+										class="control-label d-none d-sm-block">仕入商品名称</label></th>
 								<th><label
-									for="chumonJisseki.chumonJissekiMeisais0.shiirePrdId"
-									class="control-label d-none d-sm-block">仕入先コード</label></th>
-								<th><label
-									for="chumonJisseki.chumonJissekiMeisais0.shiireMaster.shiirePrdName"
-									class="control-label d-none d-sm-block">仕入商品名称</label></th>
-								<th><label
-									for="chumonJisseki.chumonJissekiMeisais0.shiireMaster.shohinMaster.shohinName"
-									class="control-label">商品名称</label></th>
-								<th><label
-									for="chumonJisseki.chumonJissekiMeisais0.chumonSu"
-									class="control-label">注文数</label></th>
-								<th><label
-									for="chumonJisseki.chumonJissekiMeisais0.chumonZan"
-									class="control-label">注文残</label></th>
+										for="chumonJisseki.chumonJissekiMeisais0.shiireMaster.shohinMaster.shohinName"
+										class="control-label">商品名称</label></th>
+								<th><label for="chumonJisseki.chumonJissekiMeisais0.chumonSu"
+										class="control-label">注文数</label></th>
+								<th><label for="chumonJisseki.chumonJissekiMeisais0.chumonZan"
+										class="control-label">注文残</label></th>
 							</tr>
 						</thead>
 						<!-- 実際のデータ部 -->
 						<tbody>
 							<!-- ループでデータを表示 -->
-							<tr
-								th:each="meisai, rowStat : *{chumonJisseki.chumonJissekiMeisais}">
+							<tr th:each="meisai, rowStat : *{chumonJisseki.chumonJissekiMeisais}">
 
 								<!-- Hidden部分 -->
 								<td style="display: none;">
 									<!-- 注文コード --> <input type="hidden"
-									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonId}" />
+										th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonId}" />
 									<!-- 注文先コード --> <input type="hidden"
-									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiireSakiId}" />
+										th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiireSakiId}" />
 									<!-- 商品コード --> <input type="hidden"
-									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shohinId}" />
+										th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shohinId}" />
 									<!-- 更新前注文数 --> <input type="hidden"
-									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].lastChumonSu}" />
+										th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].lastChumonSu}" />
 									<!-- 排他制御用バージョン --> <input type="hidden"
-									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].version}" />
+										th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].version}" />
 								</td>
 								<!-- データ表示部分 -->
 								<!-- 仕入商品コード -->
 								<td><input type="text"
-									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiirePrdId}"
-									class="form-control custom-disabled d-none d-sm-block"
-									tabindex="-1" /></td>
+										th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiirePrdId}"
+										class="form-control custom-disabled d-none d-sm-block" tabindex="-1" /></td>
 								<!-- 仕入商品名 -->
 								<td><input type="text"
-									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiireMaster.shiirePrdName}"
-									class="form-control custom-disabled d-none d-sm-block"
-									tabindex="-1" readonly="readonly" /></td>
+										th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiireMaster.shiirePrdName}"
+										class="form-control custom-disabled d-none d-sm-block" tabindex="-1"
+										readonly="readonly" /></td>
 								<!-- 商品名 -->
 								<td><input type="text"
-									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiireMaster.shohinMaster.shohinName}"
-									class="form-control custom-disabled" tabindex="-1"
-									readonly="readonly" /></td>
+										th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].shiireMaster.shohinMaster.shohinName}"
+										class="form-control custom-disabled" tabindex="-1" readonly="readonly" /></td>
 								<!-- 注文数 -->
 								<td><input type="text"
-									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu}"
-									class="form-control text-end" /> 
+										th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu}"
+										class="form-control text-end" />
 									<!-- 注文数入力チェック＆エラー表示 -->
-									<span　th:if="${#fields.hasErrors('chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu')}"
-										　　th:errors="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu}"
-									class="text-danger"></span>
-								<!-- 注文残 -->
+									<div th:if="${#fields.hasErrors('chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu')}"
+									     th:errors="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonSu}"
+									     class="text-danger"></div>
+										 <!-- 型変換エラーの捕捉 -->
+										 <div th:if="${#fields.hasGlobalErrors()}" class="text-danger">
+										   <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+										 </div>
+									<!-- 注文残 -->
 								<td><input type="text"
-									th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonZan}"
-									class="form-control custom-disabled text-end" tabindex="-1"
-									data-input-control="nofocus" /></td>
+										th:field="*{chumonJisseki.chumonJissekiMeisais[__${rowStat.index}__].chumonZan}"
+										class="form-control custom-disabled text-end" tabindex="-1"
+										data-input-control="nofocus" /></td>
 							</tr>
 						</tbody>
 					</table>
 					<!-- 更新ボタン -->
 					<div class="form-group">
-						<input id="submit_btn" type="submit" value="更新"
-							class="btn btn-primary" />
+						<input id="submit_btn" type="submit" value="更新" class="btn btn-primary" />
 					</div>
 				</form>
 				<!-- Post範囲(End) -->
 			</div>
 			<!-- 処理結果表示部 -->
 			<!-- 更新しました系表示部 正常：青　異常：赤-->
-			<div id="remark"
-				th:class="${chumonViewModel.isNormal ? 'text-primary' : 'text-danger'}">
+			<div id="remark" th:class="${chumonViewModel.isNormal ? 'text-primary' : 'text-danger'}">
 				<b th:text="${chumonViewModel.remark}"></b>
 			</div>
 		</div>
@@ -170,4 +169,5 @@
 		RendaSolution();
 	</script>
 </div>
+
 </html>
